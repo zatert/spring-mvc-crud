@@ -1,26 +1,36 @@
 package web.model;
 
+import lombok.Data;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
+//@Data
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
     private String name;
-    private String lastName;
+    private String lastname;
     private Integer age;
 
     public User() {
     }
 
-    public User(String name, String lastName, Integer age) {
+    public User(String name, String lastname, Integer age) {
         this.name = name;
-        this.lastName = lastName;
+        this.lastname = lastname;
+        this.age = age;
+    }
+
+    public User(Integer id, String name, String lastname, Integer age) {
+        this.id = id;
+        this.name = name;
+        this.lastname = lastname;
         this.age = age;
     }
 
@@ -40,12 +50,12 @@ public class User {
         this.name = name;
     }
 
-    public String getLastName() {
-        return lastName;
+    public String getLastname() {
+        return lastname;
     }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
     }
 
     public Integer getAge() {

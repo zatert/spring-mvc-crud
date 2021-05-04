@@ -4,17 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import web.dao.UserDao;
 import web.dao.UserDaoImpl;
 import web.model.User;
-
-import java.util.List;
 
 @Controller
 //@RequestMapping("/users")
 public class MainController {
     @Autowired
     private UserDaoImpl userDao;
+
 
     //@RequestMapping(value = "/users3", method = RequestMethod.GET)
     @ResponseBody
@@ -29,7 +27,7 @@ public class MainController {
         return "users";
     }
 
-    @PostMapping(value="/users")
+    @PostMapping(value="/add")
     public String add(@RequestParam String name, @RequestParam String lastname, @RequestParam Integer age,
                         Model model){
     User user = new User(name, lastname, age);
@@ -38,28 +36,35 @@ public class MainController {
         return "users";
     }
 
-    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+   // @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    @GetMapping("/delete")
     private String deleteUser(@RequestParam Integer id, Model model){
         userDao.delete(id);
         System.out.println("User_Id : ");
         model.addAttribute("list", userDao.all());
-        return "redirect:/users"; //"users";
-    }
-    @PostMapping(value="/edit")
-    public String editUser(@RequestParam(required=false) String name, @RequestParam Integer id,
-                           @RequestParam(required=false) String lastname, @RequestParam(required=false) Integer age, Model model){
-        User user = userDao.getOne(id);
-        if(name != null) {
-            user.setName(name);
-        }
-        if(lastname != null) {
-            user.setLastName(lastname);
-        }
-        if(age != null) {
-            user.setAge(age);
-        }
-        userDao.edit(user);//(user.getName(), lastname, age);
-        model.addAttribute("list", userDao.all());
         return "redirect:/users";
+    }
+      @PostMapping(value="/edit")     //@RequestMapping(value = "/edit/{id}", method = RequestMethod.POST)     @PathVariable("id")
+//    public String edit(@RequestParam(required=false) Integer id, @RequestParam(required=false) String name,
+//                           @RequestParam(required=false) String lastname, @RequestParam(required=false) Integer age, Model model){
+//        User user = userDao.getOne(id);
+//        if(name != null) {
+//            user.setName(name);
+//        }
+//        if(lastname != null) {
+//            user.setLastname(lastname);
+//        }
+//        if(age != null) {
+//            user.setAge(age);
+//        }
+          public String edit(User user){
+        userDao.edit(user);
+        //model.addAttribute("list", userDao.all());
+        return "redirect:/users";
+    }
+    @GetMapping("/findOne")
+    @ResponseBody //прочитать
+    public User findOne(Integer id){
+        return userDao.getOne(id);
     }
 }

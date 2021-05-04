@@ -29,23 +29,23 @@ public class UserDaoImpl {//implements UserDao{
 //        em.getTransaction().commit();
 
     }
-    @Transactional(readOnly = true)
+    @Transactional//(readOnly = true)
     public List<User> all(){
         return entityManager.createQuery("select u from User u", User.class).getResultList();
     }
 
     @Transactional
     public void delete(Integer id){
-       Query q = entityManager.createQuery("delete from User where id=:id");//("delete u from User u where u.getId= :id", User.class);
-            q.setParameter("id",id);
-            int deleted = q.executeUpdate();
-             System.out.println("Deleted: " + deleted + " user(s)");
+        Query q = entityManager.createQuery("delete from User where id=:id"); //("delete u from User u where u.id= :id", User.class)
+        q.setParameter("id",id);
+        int deleted = q.executeUpdate();
+        System.out.println("Deleted: " + deleted + " user(s)");
          }
     @Transactional
     public void edit(User user){//(Integer id, String name, String lastname, Integer age){
-        entityManager.createQuery("UPDATE User u SET u.name =  :name,  u.lastName = :lastName, u.age = :age WHERE u.id = :id")
+        entityManager.createQuery("UPDATE User u SET u.name =  :name,  u.lastname = :lastname, u.age = :age WHERE u.id = :id")
             .setParameter("name", user.getName())
-            .setParameter("lastName", user.getLastName())
+            .setParameter("lastname", user.getLastname())
             .setParameter("age", user.getAge())
             .setParameter("id", user.getId())
             .executeUpdate();
@@ -53,10 +53,11 @@ public class UserDaoImpl {//implements UserDao{
     @Transactional
     public User getOne(Integer id){
         TypedQuery<User> q = entityManager.createQuery(
-        "select u from User u where u.id = :id", User.class
-        );
+        "select u from User u where u.id = :id", User.class);
+        
         q.setParameter("id", id);
-        return q.getSingleResult();
+        User user =  q.getSingleResult();
+        return user;
     }
 }
 // на которую выводятся все юзеры с возможностью добавлять, удалять и изменять юзера.
