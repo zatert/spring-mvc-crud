@@ -64,7 +64,7 @@ public class MainController {
     }
     @GetMapping("/findOne")
     @ResponseBody //прочитать
-    public User findOne(Integer id){
+    public User findOne(@RequestParam Integer id){
         return userDao.getOne(id);
     }
 }

@@ -20,20 +20,21 @@
                 event.preventDefault();
                 var href = $(this).attr('href');
                 var text = $(this).text();
-                // if(text=='Edit'){
-                    $.get(href, function (item){
-                        $('.myForm #id').val(item.id);
-                        $('.myForm #name').val(item.name);
-                        $('.myForm #lastname').val(item.lastname);
-                        $('.myForm #age').val(item.age);
-                    });
-                    $('.myForm #exampleModal').modal('show');
-                // } else {
-                //     $('.myForm #name').val('');
-                //     $('.myForm #lastname').val('');
-                //     $('.myForm #age').val('');
-                //     $('.myForm #exampleModal').modal('show');
-                // }
+                // if(text=='Edit') {
+                     $.get(href, function (item) {
+                         alert(item.id);
+                         $('.myForm #id').val(item.id);
+                         $('.myForm #name').val(item.name);
+                         $('.myForm #lastname').val(item.lastname);
+                         $('.myForm #age').val(item.age);
+                     });
+                     $('.myForm #exampleModal').modal('show');
+                 // } else {
+                 //     $('.myForm #name').val('');
+                 //     $('.myForm #lastname').val('');
+                 //     $('.myForm #age').val('');
+                 //     $('.myForm #exampleModal').modal('show');
+                 // }
 
             });
 
