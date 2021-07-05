@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import web.model.User;
+import web.repository.UserRepo;
 
 import javax.persistence.*;
 import java.util.List;
@@ -52,12 +53,14 @@ public class UserDaoImpl {//implements UserDao{
     }
     @Transactional
     public User getOne(Integer id){
-        TypedQuery<User> q = entityManager.createQuery(
-        "select u from User u where u.id = :id", User.class);
-        
-        q.setParameter("id", id);
-        User user =  q.getSingleResult();
-        return user;
+        //TypedQuery<User> q =
+        List<User> result =  entityManager.createQuery(
+        "select u from User u where u.id = :id", User.class)
+                        .setParameter("id", id).getResultList();
+        //User user =  q.getSingleResult();
+       // q.executeUpdate();
+        //List<User> user= q.getResultList();
+        return result.isEmpty() ? null : result.get(0);
     }
 }
 // на которую выводятся все юзеры с возможностью добавлять, удалять и изменять юзера.

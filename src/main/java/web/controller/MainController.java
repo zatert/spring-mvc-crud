@@ -1,18 +1,24 @@
 package web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import web.dao.UserDaoImpl;
 import web.model.User;
+import web.repository.UserRepo;
+
+import java.util.List;
 
 @Controller
 //@RequestMapping("/users")
 public class MainController {
     @Autowired
     private UserDaoImpl userDao;
-
+    @Autowired
+    private UserRepo userRepo;
 
     //@RequestMapping(value = "/users3", method = RequestMethod.GET)
     @ResponseBody
@@ -65,6 +71,9 @@ public class MainController {
     @GetMapping("/findOne")
     @ResponseBody //прочитать
     public User findOne(@RequestParam Integer id){
+       // User u = userDao.getOne(id);
+        //return  userDao.getOne(id);
         return userDao.getOne(id);
+       // return userRepo.findById(id).get();
     }
 }
