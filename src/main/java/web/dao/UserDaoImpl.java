@@ -60,4 +60,3 @@ public class UserDaoImpl {//implements UserDao{
         return user;
     }
 }
-// на которую выводятся все юзеры с возможностью добавлять, удалять и изменять юзера.
