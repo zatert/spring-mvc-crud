@@ -19,14 +19,38 @@
 
                 event.preventDefault();
                 var href = $(this).attr('href');
-                var text = $(this).text();
+                let id = $('#txtId').val();
                 // if(text=='Edit'){
-                    $.get(href, function (item){
-                        $('.myForm #id').val(item.id);
-                        $('.myForm #name').val(item.name);
-                        $('.myForm #lastname').val(item.lastname);
-                        $('.myForm #age').val(item.age);
-                    });
+                    alert(id);
+                    // $.get(href, function (item){
+                    //     alert(item);
+                    //     $('.myForm #id').val(item.id);
+                    //     $('.myForm #name').val(item.name);
+                    //     $('.myForm #lastname').val(item.lastname);
+                    //     $('.myForm #age').val(item.age);
+                    // });
+    function updateUser(id) {
+    $.ajax({
+        url: '/find/' + id,
+        method: 'GET',  //GET
+        dataType: 'json',
+        //   data: userObj,
+        //data: {},
+        contentType: 'application/json; charset=utf-8',
+        success: function (data) {
+            alert(data);
+            $('.myForm #id').val(data.id);
+            $('.myForm #name').val(data.name);
+            $('.myForm #lastname').val(data.lastname);
+            $('.myForm #age').val(data.age);
+            // getAllUsers();
+        },
+        error: function (error) {
+            alert("error ");
+        }
+
+    })
+}
                     $('.myForm #exampleModal').modal('show');
                 // } else {
                 //     $('.myForm #name').val('');
@@ -75,13 +99,16 @@
 
                 <tbody>
                 <tr th:each="item : ${list}">
-                    <td id="container" th:text="${item.id}" >id</td>
+<!--                    <td id="txtId" th:text="${item.id}" >id</td>-->
+                    <td input type="text" id="txtId" th:text="${item.id}">id</td>
                     <td th:text="${item.name}">name</td>
                     <td th:text="${item.lastname}">last name</td>
                     <td th:text="${item.age}">age</td>
                     <td>
                         <a type="submit" class="btn btn-danger delBtn" th:href="@{delete/(id=${item.id})}">Delete</a>
-                        <a class="btn btn-primary eBtn" th:href="@{findOne/(id=${item.id})}">Edit</a></td>
+<!--                        <a class="btn btn-primary eBtn" th:href="@{findOne/(id=${item.id})}">Edit</a></td>-->
+                    <a class="btn btn-primary eBtn" th:href="@{find/(id=${item.id})}">Edit</a></td>
+<!--                    <input type="hidden" id="id" name="id">-->
                 </tr>
                 </tbody>
             </table>
