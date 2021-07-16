@@ -11,7 +11,7 @@ import java.util.List;
 @Component
 //@Transactional(readOnly = true)
 //@Service
-public class UserDaoImpl {//implements UserDao{
+public class UserDaoImpl { //implements UserDao {
     //private EntityManagerFactory entityManagerFactory;
     @PersistenceContext//(unitName = "emf")
     private EntityManager entityManager;  // прилетит сюда из энтитиМенеджрФэктори

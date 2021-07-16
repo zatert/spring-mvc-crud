@@ -26,8 +26,8 @@
         <td th:text="${user.name}">name</td>
         <td th:text="${user.lastname}">lastname</td>
         <td th:text="${user.age}">age</td>
-        <td> <a th:href="@{/formForUpdate/{id}(id=${user.id})}" class="btn btn-primary">Update</a>
-            <a th:href="@{/deleteUser/{id}(id=${user.id})}" class="btn btn-danger">Delete</a>
+        <td> <a th:href="@{/formForUpdate/(id=${user.id})}" class="btn btn-primary">Update</a>
+            <a th:href="@{/deleteUser/(id=${user.id})}" class="btn btn-danger">Delete</a>
         </td>
     </tr>
         </tbody>

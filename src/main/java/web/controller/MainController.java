@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import web.dao.UserDaoImpl;
 import web.model.User;
 import web.repository.UserRepo;
+import web.service.UserServImpl;
 import web.service.UserService;
 
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.List;
 //@RequestMapping("/users")
 public class MainController {
     @Autowired
-    private UserDaoImpl userDao;
+    private UserServImpl userDao;
 //    @Autowired
 //    private UserRepo userRepo;
 //    @RequestMapping("/users")
@@ -36,7 +37,7 @@ public class MainController {
 //
     @GetMapping(value = "/users")
     public String allUsers(Model model){
-        List<User> list = userDao.all();
+        List<User> list = userDao.getAll();
         model.addAttribute("list", list);
         //return "redirect:/users";
         return "users";
@@ -51,7 +52,7 @@ public class MainController {
     }
     @PostMapping("/saveUser")
     public String saveUser(@ModelAttribute("user") User user){
-        userDao.addUser(user);
+        userDao.add(user);
         //userRepo.save(user);
         return "redirect:/users";
     }
@@ -61,16 +62,16 @@ public class MainController {
         //userRepo.save(user);
         return "redirect:/users";
     }
-    @GetMapping("/formForUpdate/{id}")
-    public String formForUpdate(@PathVariable(value = "id")Integer id, Model model){
+    @GetMapping("/formForUpdate")
+    public String formForUpdate(@RequestParam Integer id, Model model){ //@PathVariable(value = "id")
 //        User user = userRepo.findById(id).get();
         User user = userDao.getOne(id);
         // set employee as a model attribute to pre-populate the form
         model.addAttribute("user", user);
         return "update_user";
     }
-    @GetMapping("/deleteUser/{id}")
-    public String deleteUser(@PathVariable(value = "id")Integer id){
+    @GetMapping("/deleteUser")
+    public String deleteUser(@RequestParam Integer id){
 //        userRepo.deleteById(id);
         userDao.delete(id);
         return "redirect:/users";
